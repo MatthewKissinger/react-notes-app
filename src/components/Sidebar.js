@@ -1,8 +1,14 @@
 import React from "react"
 
 export default function Sidebar(props) {
-    const noteElements = props.notes.map((note, index) => (
-        <div key={note.id}>
+
+    const noteElements = props.notes.map((note, index) => {
+       
+        const noteBody = props.notes[index].body;
+        const noteBodyArray = noteBody.split("\n");
+
+        return (
+            <div key={note.id}>
             <div
                 
                 className={`title ${
@@ -10,10 +16,18 @@ export default function Sidebar(props) {
                 }`}
                 onClick={() => props.setCurrentNoteId(note.id)}
             >
-                <h4 className="text-snippet">Note {index + 1}</h4>
+                <h4 className="text-snippet">{noteBodyArray[0]}</h4>
+                <button 
+                    className="delete-btn"
+                    // Your onClick event handler here
+                    onClick={event => props.deleteNote(event, note.id)}
+                >
+                    <i className="gg-trash trash-icon"></i>
+                </button>
             </div>
         </div>
-    ))
+        )
+    })
 
     return (
         <section className="pane sidebar">
